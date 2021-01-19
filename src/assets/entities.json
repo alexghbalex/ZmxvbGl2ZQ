@@ -1,0 +1,21 @@
+{
+  "user": {
+    "header": "<h2 style='margin: 0'><i class='material-icons' style='display: inline-flex; vertical-align: text-top; color: darkturquoise'>face</i>Users</h2>",
+    "buttons": [
+      {
+        "name": "Create new",
+        "action": "createNew"
+      },
+      {
+        "name": "Export",
+        "action": "export"
+      }
+    ],
+    "properties": [
+      "id",
+      "first_name",
+      "age",
+      "city"
+    ]
+  }
+}

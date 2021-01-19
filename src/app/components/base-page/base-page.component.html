@@ -1,0 +1,14 @@
+<header *ngIf="header">
+  <section [innerHTML]="header | safeHtml"></section>
+  <section class="actions">
+    <button mat-raised-button color="primary" *ngFor="let button of buttons"
+            (click)="actions[button.action]($event)">{{button.name}}</button>
+  </section>
+</header>
+
+<app-table
+  [data]="data"
+  [properties]="properties"
+  [entityType]="entityType"
+  (deleteEntity)="deleteEntity($event)">
+</app-table>
