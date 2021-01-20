@@ -1,39 +1,25 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { HttpClient } from '@angular/common/http';
-import { catchError, filter, map } from 'rxjs/operators';
-import { of, Subscription } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
-
-export interface Entity {
-  header: string;
-  buttons: { name: string, action: string }[];
-  properties: string[];
-}
+import { Entity, EntityData, EntityType } from '../../models';
+import Entities from '../../../assets/entities.json';
 
 @Component({template: ''})
-export class BasePageComponent implements OnInit, OnDestroy {
+export class BasePageComponent implements OnInit {
   header: string;
   buttons: { name: string, action: string }[];
   properties: string[];
-  data: { [prop: string]: string | number }[];
+  data: EntityData[];
   actions: { [action: string]: () => void } = {};
 
-  protected readonly entityType: string;
-  protected subscriptions$: Subscription[] = [];
+  protected readonly entityType: EntityType;
 
-  constructor(protected dataService: DataService,
-              protected snackBar: MatSnackBar,
-              private http: HttpClient) {
-    this.getEntityConfig();
+  constructor(protected dataService: DataService, protected snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
+    this.getEntityConfig();
     this.data = this.dataService.getData(this.entityType);
-  }
-
-  ngOnDestroy(): void {
-    this.subscriptions$.forEach(sub => sub.unsubscribe());
   }
 
   deleteEntity(id: number): void {
@@ -41,25 +27,19 @@ export class BasePageComponent implements OnInit, OnDestroy {
   }
 
   private getEntityConfig(): void {
-    const getEntityConfigSub$ = this.http.get(`./assets/entities.json`)
-      .pipe(
-        map(entities => entities[this.entityType]),
-        filter((entity: Entity) => !!entity),
-        catchError(e => {
-          this.showError(e && e.message);
-          return of({header: '', buttons: null, properties: null});
-        })
-      )
-      .subscribe(({header, buttons, properties}) => {
-        this.header = header;
-        this.buttons = buttons;
-        this.properties = properties;
+    const entity: Entity = Entities[this.entityType];
 
-        if (this.buttons && this.actions && this.buttons.length !== Object.keys(this.actions).length) {
-          this.showError('Define all actions for the buttons');
-        }
-      });
-    this.subscriptions$.push(getEntityConfigSub$);
+    if (entity) {
+      this.header = entity.header;
+      this.buttons = entity.buttons;
+      this.properties = entity.properties;
+    } else {
+      this.showError('The entity type is invalid');
+    }
+
+    if (this.buttons && this.actions && this.buttons.length !== Object.keys(this.actions).length) {
+      this.showError('Define all actions for the buttons');
+    }
   }
 
   protected showAction(action: string): void {

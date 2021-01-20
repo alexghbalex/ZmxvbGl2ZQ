@@ -1,15 +1,17 @@
-import { Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, Output } from '@angular/core';
 import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
+import { EntityData } from '../../models';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
-  styleUrls: ['./table.component.scss']
+  styleUrls: ['./table.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TableComponent implements OnDestroy {
-  @Input() data: { [prop: string]: string | number }[];
+  @Input() data: EntityData[];
   @Input() properties: string[];
   @Input() entityType: string;
   @Output() deleteEntity: EventEmitter<number> = new EventEmitter<number>();

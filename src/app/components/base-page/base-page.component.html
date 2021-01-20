@@ -1,5 +1,5 @@
 <header *ngIf="header">
-  <section [innerHTML]="header | safeHtml"></section>
+  <section [innerHTML]="header | safeHtml" class="header"></section>
   <section class="actions">
     <button mat-raised-button color="primary" *ngFor="let button of buttons"
             (click)="actions[button.action]($event)">{{button.name}}</button>

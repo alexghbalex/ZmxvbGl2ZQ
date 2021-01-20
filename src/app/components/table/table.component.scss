@@ -1,5 +1,6 @@
 table {
   width: 100%;
+  min-width: 600px;
   margin: 20px auto;
 
   th, td {
@@ -8,6 +9,8 @@ table {
     &.mat-column-id {
       text-transform: uppercase;
     }
+
+    border-bottom-style: none;
   }
 
   tr:nth-child(2n) {
