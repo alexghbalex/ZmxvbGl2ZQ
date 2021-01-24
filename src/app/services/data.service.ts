@@ -5,7 +5,7 @@ import Data from '../../assets/user-data.json';
 @Injectable({
   providedIn: 'root'
 })
-export class DataService {
+export class DataService<T> {
   private readonly USERDATA: UserData[];
 
   constructor() {

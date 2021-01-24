@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BasePageComponent } from '../../base-page/base-page.component';
-import { EntityType } from '../../../models';
+import { EntityType, UserData } from '../../../models';
 
 @Component({
   selector: 'app-user-page',
@@ -8,7 +8,7 @@ import { EntityType } from '../../../models';
   styleUrls: ['../../base-page/base-page.component.scss', './user-page.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UserPageComponent extends BasePageComponent implements OnInit {
+export class UserPageComponent extends BasePageComponent<UserData> implements OnInit {
   entityType = EntityType.user;
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import { Entity, EntityData, EntityType } from '../../models';
 import Entities from '../../../assets/entities.json';
 
 @Component({template: ''})
-export class BasePageComponent implements OnInit {
+export class BasePageComponent<T> implements OnInit {
   header: string;
   buttons: { name: string, action: string }[];
   properties: string[];
@@ -14,7 +14,7 @@ export class BasePageComponent implements OnInit {
 
   protected readonly entityType: EntityType;
 
-  constructor(protected dataService: DataService, protected snackBar: MatSnackBar) {
+  constructor(protected dataService: DataService<T>, protected snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
